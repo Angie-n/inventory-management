@@ -14,13 +14,28 @@ db.once('open', () => console.log("Connection successful"));
 const Pokemon = require('./models/pokemon');
 const PokemonInstance = require('./models/pokemoninstance');
 const Type = require('./models/type');
+const Nature = require('./models/nature');
 
 var pokemons = [];
 var pokemonInstances = [];
 var types = [];
+var natures = [];
+
+function natureCreate(name, increasedStat, decreasedStat, likesFlavor, hatesFlavor) {
+    const natureDetail = {name: name, increased_stat: increasedStat, decreased_stat: decreasedStat, likes_flavor: likesFlavor, hates_flavor: hatesFlavor, is_verified: true};
+    const nature = new Nature(natureDetail);
+
+    nature.save((err, product) => {
+        if(err) {
+            return err;
+        }
+        console.log("New Nature: " + product);
+    })
+    natures.push(nature);
+}
 
 function typeCreate(name) {
-    const typeDetail = {name: name};
+    const typeDetail = {name: name, is_verified: true};
     const type = new Type(typeDetail);
 
     type.save((err, product) => {
@@ -46,8 +61,8 @@ function pokemonCreate(name, price, numberInStock, image, types, weight, height)
     pokemons.push(pokemon);
 }
 
-function pokemonInstanceCreate(pokemon, status, birthDate, dateReceived) {
-    const pokemonInstanceDetail = {pokemon: pokemon, status: status, birth_date: birthDate, date_received: dateReceived};
+function pokemonInstanceCreate(pokemon, status, birthDate, dateReceived, nature) {
+    const pokemonInstanceDetail = {pokemon: pokemon, status: status, birth_date: birthDate, date_received: dateReceived, nature: nature};
     const pokemonInstance = new PokemonInstance(pokemonInstanceDetail);
 
     pokemonInstance.save((err, product) => {
@@ -92,12 +107,28 @@ function createRandomPokemonInstances(pokemon) {
         }
         let birthDate = Date.now() - (60 * 60 * 24 * 7 * 1000) - Math.floor(Math.random() * 1000) * 60 * 60 * 24 * 1000;
         let dateReceived = Date.now();
-        pokemonInstanceCreate(pokemon, status, birthDate, dateReceived);
+        let natureIndex = Math.floor(Math.random() * natures.length);
+        pokemonInstanceCreate(pokemon, status, birthDate, dateReceived, natures[natureIndex]);
         pokemon.number_in_stock++;
     }
 }
 
-(function createPokemon() {
+let naturePromise = new Promise((resolve, reject) => {
+    const fetchData = fetch('https://pokeapi.co/api/v2/nature?limit=100');
+    const jsonData = fetchData.then(fd => fd.json());
+    jsonData.then(jd => {
+        jd.results.forEach((result, index) => {
+            const name = result.name;
+            const urlData = fetch(result.url);
+            const urlJson = urlData.then(urlResult => urlResult.json());
+            urlJson.then(data => {
+                if(data.increased_stat === null) natureCreate(name, null, null, null, null);
+                else natureCreate(name, data.increased_stat.name, data.decreased_stat.name, data.likes_flavor.name, data.hates_flavor.name);
+            }).catch(err => {if(err) console.log(err)})
+        })
+    });
+
+naturePromise.then(() => {
     const fetchData = fetch('https://pokeapi.co/api/v2/pokemon?limit=151');
     const jsonData = fetchData.then(fd => fd.json());
     jsonData.then(jd => {
@@ -132,7 +163,7 @@ function createRandomPokemonInstances(pokemon) {
                 });
             })
             .catch(err => console.log(err));
-        })
+        });
     })
-    .catch(err => console.log(err));
-})();
+    .catch(err => console.log(err))});
+});
