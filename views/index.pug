@@ -1,0 +1,17 @@
+extends layout 
+
+block content
+  h1= title
+  p Welcome to the Pokedoption inventory page, where we maintain the data that help grows people's Pokemon families (for a cost)
+
+  if error
+    p Error getting dynamic content.
+  else
+    p Current record counts:
+
+    ul
+      li Total Pokemon: !{data.pokemon_count}
+      li Total Types: !{data.type_count}
+      li Total PokemonInstances: !{data.pokemonInstance_count}
+      li Available PokemonInstances: !{data.available_pokemonInstance_count}
+      li Adopted PokemonInstances: !{data.adopted_pokemonInstance_count}
