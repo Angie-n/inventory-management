@@ -14,4 +14,10 @@ const PokemonSchema = new Schema(
   }
 );
 
+PokemonSchema
+  .virtual('url')
+  .get(function() {
+    return '/catalog/pokemon/' + this.id;
+  })
+
 module.exports = mongoose.model("Pokemon", PokemonSchema);
