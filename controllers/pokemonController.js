@@ -36,3 +36,12 @@ exports.pokemon_list = (req, res, next) => {
             res.render('pokemon_list', {title: 'Pokemon List', pokemon_list: list_pokemon})
         })
 }
+
+exports.pokemon_detail = (req, res, next) => {
+    Pokemon.findById(req.params.id)
+        .populate('types')
+        .exec((err, result) => {
+            if(err) return err;
+            res.render('pokemon_detail', {pokemon: result});
+        })
+}
