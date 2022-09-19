@@ -1,0 +1,14 @@
+extends layout 
+
+block content 
+    h1= type.name
+    if type.is_verified 
+        i(class="fa-solid fa-circle-check")
+
+    div 
+        h2 PokemonInstances with this type 
+        ul
+        each poke in pokemon
+            li
+                p= poke.name
+                img(src=poke.image)
