@@ -1,0 +1,21 @@
+extends layout 
+
+block content 
+    h1= pokemon.name
+    if pokemon.is_verified 
+        i(class="fa-solid fa-circle-check")
+    img(src=pokemon.image)
+
+    div 
+        p Price: $!{pokemon.price}
+        p Number in Stock: !{pokemon.number_in_stock}
+        ul Types: 
+            each val in pokemon.types
+                li 
+                    a(href=val.url) !{val.name} 
+        p Weight: !{pokemon.weight} hectograms
+        p Height: !{pokemon.height} decimetres
+
+    
+            
+
