@@ -40,8 +40,13 @@ exports.pokemon_list = (req, res, next) => {
 exports.pokemon_detail = (req, res, next) => {
     Pokemon.findById(req.params.id)
         .populate('types')
-        .exec((err, result) => {
+        .exec((err, pokemonResult) => {
             if(err) return err;
-            res.render('pokemon_detail', {pokemon: result});
+            PokemonInstance.find({pokemon: pokemonResult})
+                .sort({id: 1})
+                .exec((err, pokemoninstancesResult) => {
+                    if(err) return err;
+                    res.render('pokemon_detail', {pokemon: pokemonResult, pokemoninstance_list: pokemoninstancesResult});
+                });
         })
 }
