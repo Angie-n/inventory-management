@@ -33,7 +33,7 @@ exports.pokemon_list = (req, res, next) => {
         .populate('types')
         .exec((err, list_pokemon) => {
             if(err) return err;
-            res.render('pokemon_list', {title: 'Pokemon List', pokemon_list: list_pokemon})
+            res.render('list', {title: 'Pokemon List', list: list_pokemon})
         })
 }
 
