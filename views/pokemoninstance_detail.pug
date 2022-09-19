@@ -1,0 +1,14 @@
+extends layout 
+
+block content 
+    h1= pokemoninstance.id
+    img(src=pokemoninstance.pokemon.image)
+
+    div 
+        p Pokemon: 
+            a(href=pokemoninstance.pokemon.url)=pokemoninstance.pokemon.name
+        p Status: !{pokemoninstance.status}
+        p Nature: 
+            a(href=pokemoninstance.nature.url) !{pokemoninstance.nature.name}
+        p Birthday: !{pokemoninstance.birth_date}
+        p Date received by Pokedoption: !{pokemoninstance.date_received}
