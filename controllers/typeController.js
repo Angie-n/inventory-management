@@ -3,6 +3,7 @@ const Pokemon = require('../models/pokemon');
 
 exports.type_list = (req, res) => {
     Type.find({}, 'name url')
+        .sort({name: 1})
         .exec((err, result) => {
             if(err) return err;
             res.render('list', {title: "Type List", list: result})
