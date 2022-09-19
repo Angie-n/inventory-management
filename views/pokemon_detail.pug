@@ -16,6 +16,15 @@ block content
         p Weight: !{pokemon.weight} hectograms
         p Height: !{pokemon.height} decimetres
 
+    div 
+        h2 Pokemoninstances for this pokemon
+        ul
+        each pokemoninstance in pokemoninstance_list    
+            li
+                a(href=pokemoninstance.url)= pokemoninstance.id
+                p !{pokemoninstance.status}
+
+
     
             
 
