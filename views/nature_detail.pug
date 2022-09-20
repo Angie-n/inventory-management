@@ -1,0 +1,12 @@
+extends layout 
+
+block content 
+    h1= nature.name
+    if nature.is_verified 
+        i(class="fa-solid fa-circle-check")
+
+    div 
+        p Increased stat: !{nature.increased_stat}
+        p Decreased stat: !{nature.decreased_stat}
+        p Likes: !{nature.likes_flavor} 
+        p Dislikes: !{nature.hates_flavor}
