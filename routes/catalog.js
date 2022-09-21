@@ -10,6 +10,7 @@ const nature_controller = require('../controllers/natureController');
 router.get('/', pokemon_controller.index);
 router.get('/pokemon', pokemon_controller.pokemon_list);
 router.get('/pokemon/create', pokemon_controller.pokemon_create_get);
+router.post('/pokemon/create', pokemon_controller.pokemon_create_post);
 router.get('/pokemon/:id', pokemon_controller.pokemon_detail);
 
 //type controller stuff
