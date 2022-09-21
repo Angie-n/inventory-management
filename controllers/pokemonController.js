@@ -107,6 +107,7 @@ exports.pokemon_create_post = [
 
     if (!errors.isEmpty()) {
       Type.find({})
+        .sort({name: 1})
         .exec((err, typeResult) => {
           if(err) return err;
 
