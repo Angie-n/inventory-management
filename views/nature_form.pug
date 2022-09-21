@@ -1,0 +1,27 @@
+extends layout
+
+block content
+  h1= title
+
+  form(method='POST' action='')
+    div
+      label(for='name') Name:
+      input#name(type='text' name='name' required='true' value=(undefined===nature ? '' : nature.name))
+    div
+      label(for='increased_stat') Increased Stat:
+      input#increased_stat(type='text' name='increased_stat' value=(undefined===nature ? '' : nature.increased_stat))
+    div
+      label(for='decreased_stat') Decreased Stat:
+      input#decreased_stat(type='text' name='decreased_stat' value=(undefined===nature ? '' : nature.decreased_stat))
+    div
+      label(for='likes_flavor') Likes Flavor:
+      input#likes_flavor(type='text' name='likes_flavor' value=(undefined===nature ? '' : nature.likes_flavor))
+    div
+      label(for='hates_flavor') Hates Flavor:
+      input#hates_flavor(type='text' name='hates_flavor' value=(undefined===nature ? '' : nature.hates_flavor))
+    button(type='submit') Submit
+
+  if errors
+    ul
+      for error in errors
+        li!= error.msg
