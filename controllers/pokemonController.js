@@ -3,7 +3,6 @@ const Pokemon = require('../models/pokemon');
 const PokemonInstance = require('../models/pokemoninstance');
 const Type = require('../models/type');
 const Nature = require('../models/nature');
-const { ResultWithContext } = require("express-validator/src/chain");
 
 exports.index = (req, res) => {
     Promise.all([
