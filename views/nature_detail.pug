@@ -10,3 +10,10 @@ block content
         p Decreased stat: !{nature.decreased_stat}
         p Likes: !{nature.likes_flavor} 
         p Dislikes: !{nature.hates_flavor}
+    div 
+        h2 Pokemoninstances with this nature 
+        ul
+        each pokemoninstance in pokemoninstance_list 
+            a(href=pokemoninstance.url)= pokemoninstance.id
+            p !{pokemoninstance.pokemon.name} 
+            p !{pokemoninstance.status} 
