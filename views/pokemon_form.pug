@@ -6,13 +6,10 @@ block content
   form(method='POST' action='')
     div
       label(for='name') Name:
-      input#name(type='text' placeholder='Pikachu' name='title' required='true' value=(undefined===pokemon ? '' : pokemon.name) )
+      input#name(type='text' placeholder='Pikachu' name='name' required='true' value=(undefined===pokemon ? '' : pokemon.name) )
     div
       label(for='price') Price: $
       input#price(type='text' placeholder='0.00' name='price' required='true' value= (undefined===pokemon ? '' : pokemon.price))
-    div
-      label(for='number_in_stock') Number in stock:
-      input#number_in_stock(type='number', placeholder='0' name='number_in_stock' required='true' value=(undefined===pokemon ? '' : pokemon.number_in_stock))
     div
       label(for='image') Image:
       input#image(type='url' placeholder='url' name='image' value= (undefined===pokemon ? '' : pokemon.image))
@@ -21,7 +18,7 @@ block content
       div
         for item in types
           div
-            input.checkbox-input(type='checkbox', name='type', id=item.id, value=item.id, checked=item.checked)
+            input(type='checkbox', name='types', id=item.id, value=item.id, checked=item.checked)
             label(for=item.id) #{item.name}
     div
       label(for='weight') Weight (hectograms):
