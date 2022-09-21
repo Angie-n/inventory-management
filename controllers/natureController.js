@@ -31,9 +31,9 @@ exports.nature_create_get = (req, res, next) => {
 
 exports.nature_create_post = [
     body("name", "Name must not be empty.")
-    .trim()
-    .isLength({ min: 1 })
-    .escape(),
+      .trim()
+      .isLength({ min: 1 })
+      .escape(),
     body("increased_stat").trim().escape(),
     body("decreased_stat").trim().escape(),
     body("likes_flavor").trim().escape(),
