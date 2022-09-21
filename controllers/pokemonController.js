@@ -1,3 +1,4 @@
+const { body, validationResult } = require("express-validator");
 const Pokemon = require('../models/pokemon');
 const PokemonInstance = require('../models/pokemoninstance');
 const Type = require('../models/type');
@@ -50,3 +51,13 @@ exports.pokemon_detail = (req, res, next) => {
                 });
         })
 }
+
+exports.pokemon_create_get = (req, res, next) => {
+    Type.find({})
+        .sort({name: 1})
+        .exec((err, typeResult) => {
+            if(err) return next(err);
+            res.render('pokemon_form', {title: "Create Pokemon", types: typeResult});
+        });
+};
+  
