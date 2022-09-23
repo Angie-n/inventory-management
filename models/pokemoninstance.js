@@ -7,7 +7,7 @@ const PokemonInstanceSchema = new Schema(
         status: { type: String, required: true, enum: ['Available', 'Adopted', 'Undergoing Rehabilitation', 'Fainted'], default: 'Undergoing Rehabilitation' },
         birth_date: { type: Date, default: null },
         date_received: { type: Date, default: Date.now },
-        nature: {type: Schema.Types.ObjectId, ref: "Nature", default: null}
+        nature: {type: Schema.Types.ObjectId, ref: "Nature", required: true, default: null}
     }
 );
 
