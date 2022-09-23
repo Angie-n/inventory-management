@@ -12,6 +12,7 @@ html(lang='en')
       h1
         a(href='/') Pokedoption Inventory
     nav 
+      h2 Collections
       ul 
         li 
           a(href='/catalog/pokemon') All Pokemon 
@@ -21,5 +22,16 @@ html(lang='en')
           a(href='/catalog/nature') All Natures 
         li 
           a(href='/catalog/pokemoninstance') All Pokemon Instances
+      h2 Create Forms 
+      ul 
+        li 
+          a(href='/catalog/pokemon/create') Create Pokemon
+        li 
+          a(href='/catalog/type/create') Create Type
+        li 
+          a(href='/catalog/nature/create') Create Nature 
+        li 
+          a(href='/catalog/pokemoninstance/create') Create Pokemon Instance
+        
     main
       block content
