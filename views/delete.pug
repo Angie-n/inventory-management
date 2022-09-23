@@ -1,0 +1,25 @@
+extends layout
+
+block content 
+    h1 #{title}: !{mainDeletion.id}
+    if mainDeletion.name != null 
+        p= mainDeletion.name
+    
+    if otherDeletions.length != 0
+        h2 The following will also be deleted with this entry: 
+        ul 
+            each deletions in otherDeletions 
+                h3 !{deletions.name}:
+                each item in deletions.list 
+                    li 
+                        a(href=item.url)= item.id
+                        if item.name != null
+                            p= item.name
+
+    p Are you sure you want to delete this entry?
+
+    form(method='POST' action='')
+        div 
+            input(type='hidden' name="id" id="id" required='true', value=mainDeletion.id)
+
+        button(type='submit') Delete
