@@ -76,7 +76,7 @@ exports.pokemon_create_post = [
     .escape(),
   body("price", "Price must must be 0 or greater and is limited to 2 decimal places.")
     .trim()
-    .isDecimal({decimal_digits: '0, 2'})
+    .matches(/^\d+.{0,1}\d{0,2}$/)
     .escape(),
   body("image")
       .trim()
