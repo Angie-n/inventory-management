@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const PokemonSchema = new Schema(
   {
-    name: {type: String, required: true, maxLength: 100},
+    name: {type: String, required: true, maxLength: 100, unique: true},
     price: {type: Number, required: true, min: 0},
     number_in_stock: {type: Number},
     image: {type: String},
