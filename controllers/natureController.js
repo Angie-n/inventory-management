@@ -69,3 +69,32 @@ exports.nature_create_post = [
     });
   },
 ];
+
+exports.nature_delete_get = (req, res) => {
+  Nature.findById(req.params.id)
+    .exec((err, natureResult) => {
+      if(err) next(err);
+      if(natureResult == null) res.redirect('/catalog/nature');
+      PokemonInstance.find({nature: natureResult})
+        .exec((err, pokemonInstanceResults) => {
+          if(err) return err;
+          res.render("delete", {
+            title: "Delete Nature",
+            mainDeletion: natureResult,
+            otherDeletions: [{name: "Pokemon Instances", list: pokemonInstanceResults}]
+          });
+        });
+    });
+}
+
+exports.nature_delete_post = (req, res) => {
+  Promise.all([
+    PokemonInstance.deleteMany({nature: req.body.id}),
+    Nature.findById(req.body.id)
+      .exec((err, natureResult) => {
+        if(err) next(err);
+        natureResult.remove();
+      })
+  ]).then(results => res.redirect("/catalog/nature"))
+  .catch(err => next(err));
+}
