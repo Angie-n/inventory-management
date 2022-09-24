@@ -112,11 +112,11 @@ function createRandomPokemonInstances(pokemon) {
     }
 }
 
-let naturePromise = new Promise((resolve, reject) => {
-    const fetchData = fetch('https://pokeapi.co/api/v2/nature?limit=100');
-    const jsonData = fetchData.then(fd => fd.json());
-    jsonData.then(jd => {
-        jd.results.forEach((result, index) => {
+(async function populateDatabase() {
+    async function populateNature() {
+        const fetchData = await fetch('https://pokeapi.co/api/v2/nature?limit=100');
+        const jsonData = await fetchData.json();
+        jsonData.results.forEach(result => {
             const name = result.name;
             const urlData = fetch(result.url);
             const urlJson = urlData.then(urlResult => urlResult.json());
@@ -125,13 +125,12 @@ let naturePromise = new Promise((resolve, reject) => {
                 else natureCreate(name, data.increased_stat.name, data.decreased_stat.name, data.likes_flavor.name, data.hates_flavor.name);
             }).catch(err => {if(err) console.log(err)})
         })
-    });
+    }
 
-naturePromise.then(() => {
-    const fetchData = fetch('https://pokeapi.co/api/v2/pokemon?limit=151');
-    const jsonData = fetchData.then(fd => fd.json());
-    jsonData.then(jd => {
-        jd.results.forEach((result, index) => {
+    async function populateEverythingElse() {
+        const fetchData = await fetch('https://pokeapi.co/api/v2/pokemon?limit=151');
+        const jsonData = await fetchData.json();
+        jsonData.results.forEach(result => {
             const name = result.name;
             const urlData = fetch(result.url)
             const urlJson = urlData.then(urlResult => urlResult.json())
@@ -163,6 +162,8 @@ naturePromise.then(() => {
             })
             .catch(err => console.log(err));
         });
-    })
-    .catch(err => console.log(err))});
-});
+    }
+
+    const firstPopulate = await populateNature();
+    populateEverythingElse();
+})();
