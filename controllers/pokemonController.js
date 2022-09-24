@@ -131,4 +131,33 @@ exports.pokemon_create_post = [
     });
   },
 ];
-  
+
+exports.pokemon_delete_get = (req, res) => {
+  Pokemon.findById(req.params.id)
+    .exec((err, pokemonResult) => {
+      if(err) next(err);
+      if(pokemonResult == null) res.redirect('/catalog/pokemon');
+      PokemonInstance.find({pokemon: pokemonResult})
+        .exec((err, pokemonInstanceResults) => {
+          if(err) return err;
+          res.render("delete", {
+            title: "Delete Pokemon",
+            mainDeletion: pokemonResult,
+            otherDeletions: [{name: "Pokemon Instances", list: pokemonInstanceResults}],
+            numDeletions: 1 + pokemonInstanceResults.length
+          });
+        });
+    });
+}
+
+exports.pokemon_delete_post = (req, res, next) => {
+  Promise.all([
+    PokemonInstance.deleteMany({pokemon: req.body.id}),
+    Pokemon.findById(req.body.id)
+      .exec((err, pokemonResult) => {
+        if(err) next(err);
+        pokemonResult.remove();
+      })
+  ]).then(results => res.redirect("/catalog/pokemon"))
+  .catch(err => next(err));
+}
