@@ -81,7 +81,8 @@ exports.nature_delete_get = (req, res) => {
           res.render("delete", {
             title: "Delete Nature",
             mainDeletion: natureResult,
-            otherDeletions: [{name: "Pokemon Instances", list: pokemonInstanceResults}]
+            otherDeletions: [{name: "Pokemon Instances", list: pokemonInstanceResults}],
+            numDeletions: 1 + pokemonInstanceResults.length
           });
         });
     });
