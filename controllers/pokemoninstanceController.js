@@ -93,15 +93,32 @@ exports.pokemonInstance_create_post = [
                                 status_list: statuses,
                                 pokemoninstance: pokemonInstance,
                                 errors: errors.array()
-                            })
-                        })
-                })
+                            });
+                        });
+                });
             return;
         }
 
         pokemonInstance.save((err) => {
             if(err) return err;
             res.redirect(pokemonInstance.url);
-        })
+        });
     }
-]
+];
+
+exports.pokemoninstance_delete_get = (req, res) => {
+    PokemonInstance.findById(req.params.id)
+        .exec((err, pokemoninstanceResult) => {
+            if(err) return err;
+            res.render('delete', {title: 'Delete Pokemon Instance', mainDeletion: pokemoninstanceResult})
+        })
+}
+
+exports.pokemoninstance_delete_post = (req, res) => {
+    PokemonInstance.findById(req.body.id)
+        .exec((err, pokemonInstanceResult) => {
+            if(err) return err;
+            pokemonInstanceResult.remove();
+            res.redirect('/catalog/pokemoninstance');
+        })
+}

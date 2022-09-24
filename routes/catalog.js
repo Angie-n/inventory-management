@@ -27,6 +27,8 @@ router.get('/type/:id', type_controller.type_detail);
 router.get('/pokemoninstance', pokemoninstance_controller.pokemonInstance_list);
 router.get('/pokemoninstance/create', pokemoninstance_controller.pokemonInstance_create_get);
 router.post('/pokemoninstance/create', pokemoninstance_controller.pokemonInstance_create_post);
+router.get('/pokemoninstance/:id/delete', pokemoninstance_controller.pokemoninstance_delete_get);
+router.post('/pokemoninstance/:id/delete', pokemoninstance_controller.pokemoninstance_delete_post);
 router.get('/pokemoninstance/:id', pokemoninstance_controller.pokemonInstance_detail);
 
 //nature controller stuff
