@@ -37,8 +37,8 @@ PokemonInstanceSchema.post('save', function(pokemonInstance, next) {
   next();
 })
 
-PokemonInstanceSchema.post('remove', function (pokemonInstance, next) {
-  Pokemon.findById(pokemonInstance.pokemon)
+PokemonInstanceSchema.pre('remove', function (next) {
+  Pokemon.findById(this.pokemon)
     .exec((err, pokemonResult) => {
       if(err) next(err);
       else if (pokemonResult == null) next();
@@ -50,8 +50,8 @@ PokemonInstanceSchema.post('remove', function (pokemonInstance, next) {
     })
 })
 
-PokemonInstanceSchema.post('deleteMany', function (pokemonInstance, next) {
-  Pokemon.findById(pokemonInstance.pokemon)
+PokemonInstanceSchema.pre('deleteMany', function (next) {
+  Pokemon.findById(this.pokemon)
     .exec((err, pokemonResult) => {
       if(err) next(err);
       else if (pokemonResult == null) next();
