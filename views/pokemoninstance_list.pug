@@ -6,7 +6,8 @@ block content
         each pokemoninstance in pokemoninstance_list 
             li
                 a(href=pokemoninstance.url)= pokemoninstance.id
-                img(src=pokemoninstance.pokemon.image)
+                if pokemoninstance.pokemon.image != null
+                    img(src=pokemoninstance.pokemon.image)
                 p !{pokemoninstance.pokemon.name}
                 p !{pokemoninstance.status}
         else 
