@@ -17,6 +17,8 @@ router.get('/pokemon/:id', pokemon_controller.pokemon_detail);
 router.get('/type', type_controller.type_list);
 router.get('/type/create', type_controller.type_create_get);
 router.post('/type/create', type_controller.type_create_post);
+router.get('/type/:id/delete', type_controller.type_delete_get);
+router.post('/type/:id/delete', type_controller.type_delete_post);
 router.get('/type/:id', type_controller.type_detail);
 
 //pokemoninstance controller stuff

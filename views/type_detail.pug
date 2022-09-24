@@ -10,5 +10,6 @@ block content
         ul
         each poke in pokemon
             li
-                p= poke.name
+                a(href=poke.url)= poke.name
                 img(src=poke.image)
+    a.delete-link(href=type.url + "/delete") Delete Type
