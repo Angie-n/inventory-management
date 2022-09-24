@@ -19,22 +19,48 @@ PokemonInstanceSchema
     return '/catalog/pokemoninstance/' + this.id;
   });
 
-  PokemonInstanceSchema.pre('save', function (next) {
-    this.wasNew = this.$isNew;
-    next();
-  })
+PokemonInstanceSchema.pre('save', function (next) {
+  this.wasNew = this.$isNew;
+  next();
+})
 
 //Updates number_in_stock every time a new pokemoninstance is created for that pokemon
 PokemonInstanceSchema.post('save', function(pokemonInstance, next) {
   if(this.wasNew) {
     Pokemon.findById(pokemonInstance.pokemon)
-    .exec((err, pokemonResult) => {
-      if(err) next(err);
-      pokemonResult.number_in_stock += 1;
-      pokemonResult.save();
-    })
+      .exec((err, pokemonResult) => {
+        if(err) next(err);
+        pokemonResult.number_in_stock += 1;
+        pokemonResult.save();
+      })
   }
   next();
+})
+
+PokemonInstanceSchema.post('remove', function (pokemonInstance, next) {
+  Pokemon.findById(pokemonInstance.pokemon)
+    .exec((err, pokemonResult) => {
+      if(err) next(err);
+      else if (pokemonResult == null) next();
+      else {
+        pokemonResult.number_in_stock -= 1;
+        pokemonResult.save();
+        next();
+      }
+    })
+})
+
+PokemonInstanceSchema.post('deleteMany', function (pokemonInstance, next) {
+  Pokemon.findById(pokemonInstance.pokemon)
+    .exec((err, pokemonResult) => {
+      if(err) next(err);
+      else if (pokemonResult == null) next();
+      else {
+        pokemonResult.number_in_stock -= 1;
+        pokemonResult.save();
+        next();
+      }
+    })
 })
 
 module.exports = mongoose.model('PokemonInstance', PokemonInstanceSchema);
