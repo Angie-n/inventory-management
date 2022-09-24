@@ -11,6 +11,8 @@ router.get('/', pokemon_controller.index);
 router.get('/pokemon', pokemon_controller.pokemon_list);
 router.get('/pokemon/create', pokemon_controller.pokemon_create_get);
 router.post('/pokemon/create', pokemon_controller.pokemon_create_post);
+router.get('/pokemon/:id/delete', pokemon_controller.pokemon_delete_get);
+router.post('/pokemon/:id/delete', pokemon_controller.pokemon_delete_post);
 router.get('/pokemon/:id', pokemon_controller.pokemon_detail);
 
 //type controller stuff
@@ -25,8 +27,6 @@ router.get('/type/:id', type_controller.type_detail);
 router.get('/pokemoninstance', pokemoninstance_controller.pokemonInstance_list);
 router.get('/pokemoninstance/create', pokemoninstance_controller.pokemonInstance_create_get);
 router.post('/pokemoninstance/create', pokemoninstance_controller.pokemonInstance_create_post);
-router.get('/pokemon/:id/delete', pokemon_controller.pokemon_delete_get);
-router.post('/pokemon/:id/delete', pokemon_controller.pokemon_delete_post);
 router.get('/pokemoninstance/:id', pokemoninstance_controller.pokemonInstance_detail);
 
 //nature controller stuff
