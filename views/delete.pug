@@ -5,7 +5,7 @@ block content
     if mainDeletion.name != null 
         p= mainDeletion.name
     
-    if otherDeletions.length != 0
+    if numDeletions != null && numDeletions > 1
         h2 The following will also be deleted with this entry: 
         ul 
             each deletions in otherDeletions 
