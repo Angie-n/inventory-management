@@ -109,7 +109,6 @@ function createRandomPokemonInstances(pokemon) {
         let dateReceived = Date.now();
         let natureIndex = Math.floor(Math.random() * natures.length);
         pokemonInstanceCreate(pokemon, status, birthDate, dateReceived, natures[natureIndex]);
-        pokemon.number_in_stock++;
     }
 }
 

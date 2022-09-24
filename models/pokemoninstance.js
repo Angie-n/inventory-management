@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+const Pokemon = require('./pokemon');
+
 const PokemonInstanceSchema = new Schema(
     {
         pokemon: {type: Schema.Types.ObjectId, ref: "Pokemon", required: true},
@@ -16,5 +18,23 @@ PokemonInstanceSchema
   .get(function() {
     return '/catalog/pokemoninstance/' + this.id;
   });
+
+  PokemonInstanceSchema.pre('save', function (next) {
+    this.wasNew = this.$isNew;
+    next();
+  })
+
+//Updates number_in_stock every time a new pokemoninstance is created for that pokemon
+PokemonInstanceSchema.post('save', function(pokemonInstance, next) {
+  if(this.wasNew) {
+    Pokemon.findById(pokemonInstance.pokemon)
+    .exec((err, pokemonResult) => {
+      if(err) next(err);
+      pokemonResult.number_in_stock += 1;
+      pokemonResult.save();
+    })
+  }
+  next();
+})
 
 module.exports = mongoose.model('PokemonInstance', PokemonInstanceSchema);
