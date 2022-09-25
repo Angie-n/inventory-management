@@ -89,3 +89,41 @@ exports.type_delete_post = (req, res) => {
                 })
         })
 }
+
+exports.type_update_get = (req, res) => {
+    Type.findById(req.params.id)
+        .exec((err, typeResult) => {
+            if(err) return err;
+            res.render('type_form', {title: "Update Type", type: typeResult});
+        });
+}
+
+exports.type_update_post = [
+    body('name', "Name must not be empty.")
+        .trim()
+        .isLength({min: 1})
+        .escape(),
+    (req, res, next) => {
+        const errors = validationResult(req);
+
+        const type = new Type({
+            _id: req.params.id,
+            name: req.body.name
+        });
+
+        if (!errors.isEmpty()) {
+            res.render("type_form", {
+                title: "Update Type",
+                type,
+                errors: errors.array(),
+              });
+            return;
+        }
+
+        Type.findByIdAndUpdate(req.params.id, type, (err) => {
+            if(err) next(err);
+            res.redirect(type.url);
+            next();
+        });
+    }
+];
