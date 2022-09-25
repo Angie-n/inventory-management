@@ -6,9 +6,12 @@ block content
   form(method='POST' action='')
     div
       label(for='pokemon') Pokemon:
-      select(id='pokemon' name='pokemon' value=(undefined===pokemoninstance ? '' : pokemoninstance.pokemon) required)
+      select(id='pokemon' name='pokemon' required)
         each pokemon in pokemon_list 
-            option(value=pokemon.id)=pokemon.name
+            if pokemon.id === pokemoninstance.pokemon.id
+              option(value=pokemon.id selected="selected")=pokemon.name
+            else
+              option(value=pokemon.id)=pokemon.name
     div
       label(for='status') Status:
       each status in status_list
@@ -17,15 +20,18 @@ block content
             label(for=status.id)= status.value
     div
       label(for='birth_date') Birthday:
-      input#birth_date(type='date' name='birth_date' value=(undefined===pokemoninstance ? '' : pokemoninstance.birth_date))
+      input#birth_date(type='date' name='birth_date' value=(undefined===pokemoninstance ? '' : pokemoninstance.birth_date_format_input))
     div
       label(for='date_received') Date received by Pokedoption:
-      input#date_received(type='date' name='date_received' value=(undefined===pokemoninstance ? '' : pokemoninstance.date_received))
+      input#date_received(type='date' name='date_received' value=(undefined===pokemoninstance ? '' : pokemoninstance.date_received_format_input))
     div
       label(for='nature') Nature:
-      select(list='nature_datalist' id='nature' name='nature' value=(undefined===pokemoninstance ? '' : pokemoninstance.nature) required)
+      select(list='nature_datalist' id='nature' name='nature' required)
         each nature in nature_list 
-            option(value=nature.id)=nature.name
+            if nature.id === pokemoninstance.nature.id
+              option(value=nature.id selected="selected")=nature.name
+            else
+              option(value=nature.id)=nature.name
     button(type='submit') Submit
 
   if errors
