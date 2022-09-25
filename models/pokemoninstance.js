@@ -38,7 +38,7 @@ PokemonInstanceSchema.pre('save', function (next) {
   next();
 })
 
-//Updates number_in_stock every time a new pokemoninstance is created for that pokemon
+//Increases number_in_stock every time a new pokemoninstance is created for that pokemon
 PokemonInstanceSchema.post('save', function(pokemonInstance, next) {
   if(this.wasNew) {
     Pokemon.findById(pokemonInstance.pokemon)
@@ -51,8 +51,23 @@ PokemonInstanceSchema.post('save', function(pokemonInstance, next) {
   next();
 })
 
-PokemonInstanceSchema.pre('remove', function (next) {
+//Decreases number_in_stock every time a pokemoninstance is deleted for that pokemon
+PokemonInstanceSchema.pre(/(deleteMany|remove)/, function (next) {
   Pokemon.findById(this.pokemon)
+    .exec((err, pokemonResult) => {
+      if(err) next(err);
+      else if (pokemonResult == null) next();
+      else {
+        pokemonResult.number_in_stock -= 1;
+        pokemonResult.save();
+        next();
+      }
+    })
+});
+
+//Increases and decreases number_in_stock accordingly for a pokemon everytime a pokemoninstance is updated 
+PokemonInstanceSchema.pre(/(updateOne|findOneAndUpdate)/, function (next) {
+  Pokemon.findById(this.getQuery().pokemon)
     .exec((err, pokemonResult) => {
       if(err) next(err);
       else if (pokemonResult == null) next();
@@ -64,17 +79,20 @@ PokemonInstanceSchema.pre('remove', function (next) {
     })
 })
 
-PokemonInstanceSchema.pre('deleteMany', function (next) {
-  Pokemon.findById(this.pokemon)
-    .exec((err, pokemonResult) => {
-      if(err) next(err);
-      else if (pokemonResult == null) next();
-      else {
-        pokemonResult.number_in_stock -= 1;
-        pokemonResult.save();
-        next();
-      }
-    })
-})
+PokemonInstanceSchema.post(/(updateOne|findOneAndUpdate)/, function (updateInfo, next) {
+  mongoose.model('PokemonInstance', PokemonInstanceSchema).findById(this.getQuery()._id, (err, pokemonInstanceResult) => {
+    if(err) return err;
+    Pokemon.findById(pokemonInstanceResult.pokemon)
+      .exec((err, pokemonResult) => {
+        if(err) next(err);
+        else if (pokemonResult == null) next();
+        else {
+          pokemonResult.number_in_stock += 1;
+          pokemonResult.save();
+          next();
+        }
+      });
+  });
+});
 
 module.exports = mongoose.model('PokemonInstance', PokemonInstanceSchema);
