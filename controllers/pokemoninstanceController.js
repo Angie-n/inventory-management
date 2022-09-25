@@ -46,7 +46,7 @@ exports.pokemonInstance_create_get = (req, res) => {
                 .sort({name: 1})
                 .exec((err, natureResult) => {
                     if(err) return err;
-                    res.render('pokemoninstance_form', {title:"Create pokemoninstance", pokemon_list: pokemonResult, nature_list: natureResult, status_list: statuses});
+                    res.render('pokemoninstance_form', {title:"Create Pokemon Instance", pokemon_list: pokemonResult, nature_list: natureResult, status_list: statuses});
                 });
         });
 }
@@ -98,7 +98,7 @@ exports.pokemonInstance_create_post = [
                                             updateStatuses(req.body.status);
                 
                                             res.render('pokemoninstance_form', {
-                                                title: 'Create pokemoninstance',
+                                                title: 'Create Pokemon Instance',
                                                 pokemon_list: pokemonResult,
                                                 nature_list: natureResult,
                                                 status_list: statuses,
@@ -150,7 +150,7 @@ exports.pokemoninstance_update_get = (req, res) => {
                         .sort({name: 1})
                         .exec((err, natureResults) => {
                             if(err) return err;
-                            res.render('pokemoninstance_form', {title:"Update pokemoninstance", pokemoninstance: pokemonInstanceResult,  pokemon_list: pokemonResults, nature_list: natureResults, status_list: statuses});
+                            res.render('pokemoninstance_form', {title:"Update Pokemon Instance", pokemoninstance: pokemonInstanceResult,  pokemon_list: pokemonResults, nature_list: natureResults, status_list: statuses});
                         })
                 })
         })
@@ -204,7 +204,7 @@ exports.pokemoninstance_update_post = [
                                             updateStatuses(req.body.status);
                 
                                             res.render('pokemoninstance_form', {
-                                                title: 'Update pokemoninstance',
+                                                title: 'Update Pokemon Instance',
                                                 pokemon_list: pokemonResult,
                                                 nature_list: natureResult,
                                                 status_list: statuses,
