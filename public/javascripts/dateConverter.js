@@ -1,4 +1,6 @@
 const toInputFormat = (date) => {
+    if(date == null) return '';
+    
     let year = date.getUTCFullYear();
     let month = date.getUTCMonth() + 1;
     if (month < 10) month = "0" + month;
