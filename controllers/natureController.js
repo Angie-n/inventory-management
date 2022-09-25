@@ -99,3 +99,53 @@ exports.nature_delete_post = (req, res) => {
   ]).then(results => res.redirect("/catalog/nature"))
   .catch(err => next(err));
 }
+
+exports.nature_update_get = (req, res, next) => {
+  Nature.findById(req.params.id)
+    .exec((err, natureResult) => {
+      if(err) return err;
+      res.render('nature_form', {title: "Update Nature", nature: natureResult})
+    })
+};
+
+exports.nature_update_post = [
+  body("name", "Name must not be empty.")
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+  body("increased_stat").trim().escape(),
+  body("decreased_stat").trim().escape(),
+  body("likes_flavor").trim().escape(),
+  body("hates_flavor").trim().escape(),
+(req, res, next) => {
+  const errors = validationResult(req);
+
+  if(req.body.increased_stat === '') req.body.increased_stat = null
+  if(req.body.decreased_stat === '') req.body.decreased_stat = null
+  if(req.body.likes_flavor === '') req.body.likes_flavor = null
+  if(req.body.hates_flavor === '') req.body.hates_flavor = null
+
+  const nature = new Nature({
+    _id: req.params.id,
+    name: req.body.name,
+    increased_stat: req.body.increased_stat,
+    decreased_stat: req.body.decreased_stat,
+    likes_flavor: req.body.likes_flavor,
+    hates_flavor: req.body.hates_flavor
+  });
+
+  if (!errors.isEmpty()) {
+      res.render("nature_form", {
+          title: "Update Nature",
+          nature,
+          errors: errors.array(),
+        });
+      return;
+  }
+
+  Nature.findByIdAndUpdate(req.params.id, nature, (err) => {
+    if(err) return err;
+    res.redirect(nature.url);
+  });
+},
+];

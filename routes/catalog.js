@@ -41,6 +41,8 @@ router.get('/nature/create', nature_controller.nature_create_get);
 router.post('/nature/create', nature_controller.nature_create_post);
 router.get('/nature/:id/delete', nature_controller.nature_delete_get);
 router.post('/nature/:id/delete', nature_controller.nature_delete_post);
+router.get('/nature/:id/update', nature_controller.nature_update_get);
+router.post('/nature/:id/update', nature_controller.nature_update_post);
 router.get('/nature/:id', nature_controller.nature_detail);
 
 module.exports = router;
