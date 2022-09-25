@@ -8,7 +8,7 @@ block content
       label(for='pokemon') Pokemon:
       select(id='pokemon' name='pokemon' required)
         each pokemon in pokemon_list 
-            if pokemon.id === pokemoninstance.pokemon.id
+            if pokemoninstance != null && pokemon.id === pokemoninstance.pokemon.id
               option(value=pokemon.id selected="selected")=pokemon.name
             else
               option(value=pokemon.id)=pokemon.name
@@ -28,7 +28,7 @@ block content
       label(for='nature') Nature:
       select(list='nature_datalist' id='nature' name='nature' required)
         each nature in nature_list 
-            if nature.id === pokemoninstance.nature.id
+            if pokemoninstance != null && nature.id === pokemoninstance.nature.id
               option(value=nature.id selected="selected")=nature.name
             else
               option(value=nature.id)=nature.name
