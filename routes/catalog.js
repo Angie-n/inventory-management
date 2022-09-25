@@ -13,6 +13,8 @@ router.get('/pokemon/create', pokemon_controller.pokemon_create_get);
 router.post('/pokemon/create', pokemon_controller.pokemon_create_post);
 router.get('/pokemon/:id/delete', pokemon_controller.pokemon_delete_get);
 router.post('/pokemon/:id/delete', pokemon_controller.pokemon_delete_post);
+router.get('/pokemon/:id/update', pokemon_controller.pokemon_update_get);
+router.post('/pokemon/:id/update', pokemon_controller.pokemon_update_post);
 router.get('/pokemon/:id', pokemon_controller.pokemon_detail);
 
 //type controller stuff
