@@ -3,7 +3,6 @@ const Pokemon = require('../models/pokemon');
 const PokemonInstance = require('../models/pokemoninstance');
 const Type = require('../models/type');
 const Nature = require('../models/nature');
-const pokemon = require("../models/pokemon");
 
 exports.index = (req, res) => {
     Promise.all([
@@ -94,6 +93,8 @@ exports.pokemon_create_post = [
     .escape(),
   (req, res, next) => {
     const errors = validationResult(req);
+
+    if(req.body.image == '') req.body.image = null;
 
     const pokemon = new Pokemon({
       name: req.body.name,
