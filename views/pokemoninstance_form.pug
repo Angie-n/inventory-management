@@ -20,10 +20,10 @@ block content
             label(for=status.id)= status.value
     div
       label(for='birth_date') Birthday:
-      input#birth_date(type='date' name='birth_date' value=(undefined===pokemoninstance ? '' : pokemoninstance.birth_date_format_input))
+      input#birth_date(type='date' name='birth_date' value=(undefined===pokemoninstance ? '' : dateFormatter.toInputFormat(pokemoninstance.birth_date)))
     div
       label(for='date_received') Date received by Pokedoption:
-      input#date_received(type='date' name='date_received' value=(undefined===pokemoninstance ? '' : pokemoninstance.date_received_format_input))
+      input#date_received(type='date' name='date_received' value=(undefined===pokemoninstance ? '' : dateFormatter.toInputFormat(pokemoninstance.date_received)))
     div
       label(for='nature') Nature:
       select(list='nature_datalist' id='nature' name='nature' required)

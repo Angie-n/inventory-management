@@ -2,7 +2,8 @@ const { body, validationResult } = require("express-validator");
 const PokemonInstance = require('../models/pokemoninstance');
 const Pokemon = require('../models/pokemon');
 const Nature = require('../models/nature');
-const { pokemon_delete_get } = require("./pokemonController");
+
+const dateFormatter = require('../public/javascripts/dateConverter');
 
 exports.pokemonInstance_list = (req, res) => {
     PokemonInstance.find()
@@ -46,7 +47,7 @@ exports.pokemonInstance_create_get = (req, res) => {
                 .sort({name: 1})
                 .exec((err, natureResult) => {
                     if(err) return err;
-                    res.render('pokemoninstance_form', {title:"Create Pokemon Instance", pokemon_list: pokemonResult, nature_list: natureResult, status_list: statuses});
+                    res.render('pokemoninstance_form', {title:"Create Pokemon Instance", pokemon_list: pokemonResult, nature_list: natureResult, status_list: statuses, dateFormatter});
                 });
         });
 }
@@ -103,6 +104,7 @@ exports.pokemonInstance_create_post = [
                                                 nature_list: natureResult,
                                                 status_list: statuses,
                                                 pokemoninstance: pokemonInstance,
+                                                dateFormatter,
                                                 errors: errors.array()
                                             });
                                         });
@@ -150,7 +152,7 @@ exports.pokemoninstance_update_get = (req, res) => {
                         .sort({name: 1})
                         .exec((err, natureResults) => {
                             if(err) return err;
-                            res.render('pokemoninstance_form', {title:"Update Pokemon Instance", pokemoninstance: pokemonInstanceResult,  pokemon_list: pokemonResults, nature_list: natureResults, status_list: statuses});
+                            res.render('pokemoninstance_form', {title:"Update Pokemon Instance", pokemoninstance: pokemonInstanceResult,  pokemon_list: pokemonResults, nature_list: natureResults, status_list: statuses, dateFormatter});
                         })
                 })
         })
@@ -175,6 +177,7 @@ exports.pokemoninstance_update_post = [
         const errors = validationResult(req);
 
         if (req.body.date_received === '') req.body.date_received = Date.now();
+        if (req.body.birth_date === '') req.body.birth_date = null;
 
         Pokemon.findById(req.body.pokemon)
             .exec((err, pokemonResult) => {
@@ -209,6 +212,7 @@ exports.pokemoninstance_update_post = [
                                                 nature_list: natureResult,
                                                 status_list: statuses,
                                                 pokemoninstance: pokemonInstance,
+                                                dateFormatter,
                                                 errors: errors.array()
                                             });
                                         });
