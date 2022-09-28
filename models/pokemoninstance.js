@@ -3,8 +3,6 @@ const Schema = mongoose.Schema;
 
 const Pokemon = require('./pokemon');
 
-const dateFormatter = require('../public/javascripts/dateConverter');
-
 const PokemonInstanceSchema = new Schema(
     {
         pokemon: {type: Schema.Types.ObjectId, ref: "Pokemon", required: true},
@@ -19,18 +17,6 @@ PokemonInstanceSchema
   .virtual('url')
   .get(function() {
     return '/catalog/pokemoninstance/' + this.id;
-  });
-
-PokemonInstanceSchema
-  .virtual('birth_date_format_input')
-  .get(function() {
-    return dateFormatter.toInputFormat(this.birth_date);
-  });
-
-PokemonInstanceSchema
-  .virtual('date_received_format_input')
-  .get(function() {
-    return dateFormatter.toInputFormat(this.date_received);
   });
 
 PokemonInstanceSchema.pre('save', function (next) {
