@@ -1,31 +1,41 @@
 extends layout 
 
 block content 
-    h1= pokemon.name
-    if pokemon.is_verified 
-        i(class="fa-solid fa-circle-check")
-    img(src=pokemon.image)
+    div#pokemon-detail-header.detail-header
+        h1= pokemon.name
+        if pokemon.is_verified 
+            i(class="fa-solid fa-circle-check")
 
-    div 
+    div#pokemon-detail-image 
+        if pokemon.image == null || pokemon.image == ''
+            i.fa-solid.fa-question
+        else
+            img(src=pokemon.image)
+
+    div#pokemon-detail-information
         p Price: $!{pokemon.price}
         p Number in Stock: !{pokemon.number_in_stock}
-        ul Types: 
+        ul#pokemon-detail-types Types: 
             each val in pokemon.types
-                li 
+                li
                     a(href=val.url) !{val.name} 
         p Weight: !{pokemon.weight} hectograms
         p Height: !{pokemon.height} decimetres
 
-    div 
-        h2 Pokemoninstances for this pokemon
+    div#pokemon-detail-list.detail-list
+        h2 Pokemon Instances for this Pokemon
         ul
         each pokemoninstance in pokemoninstance_list    
             li
                 a(href=pokemoninstance.url)= pokemoninstance.id
                 p !{pokemoninstance.status}
-    a.delete-link(href=pokemon.url + "/delete") Delete Pokemon
-    br
-    a.update-link(href=pokemon.url + "/update") Update Pokemon
+        else 
+            p No Pokemon Instances Found.
+    
+    div#pokemon-detail-actions.detail-actions
+        a.delete-link(href=pokemon.url + "/delete") Delete Pokemon
+        br
+        a.update-link(href=pokemon.url + "/update") Update Pokemon
 
     
             

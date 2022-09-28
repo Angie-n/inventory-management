@@ -2,12 +2,15 @@ extends layout
 
 block content 
     h1= title 
-    ul 
+    ul#collection-list-boxes
         each pokemoninstance in pokemoninstance_list 
             li
                 a(href=pokemoninstance.url)= pokemoninstance.id
-                if pokemoninstance.pokemon.image != null
-                    img(src=pokemoninstance.pokemon.image)
+                div#list-image-container
+                    if pokemoninstance.pokemon.image != null && pokemoninstance.pokemon.image != ''
+                        img(src=pokemoninstance.pokemon.image)
+                    else    
+                        i.fa-solid.fa-question
                 p !{pokemoninstance.pokemon.name}
                 p !{pokemoninstance.status}
         else 

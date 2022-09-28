@@ -7,12 +7,12 @@ block content
   if error
     p Error getting dynamic content.
   else
-    p Current record counts:
-
-    ul
-      li Total Pokemon: !{data.pokemon_count}
-      li Total Types: !{data.type_count}
-      li Total Natures: !{data.nature_count}
-      li Total PokemonInstances: !{data.pokemonInstance_count}
-      li Available PokemonInstances: !{data.available_pokemonInstance_count}
-      li Adopted PokemonInstances: !{data.adopted_pokemonInstance_count}
+    div   
+      h2 Current Record Counts:
+      ul
+        li Total Pokemon: !{data.pokemon_count}
+        li Total Types: !{data.type_count}
+        li Total Natures: !{data.nature_count}
+        li Total PokemonInstances: !{data.pokemonInstance_count}
+        li Available PokemonInstances: !{data.available_pokemonInstance_count}
+        li Adopted PokemonInstances: !{data.adopted_pokemonInstance_count}

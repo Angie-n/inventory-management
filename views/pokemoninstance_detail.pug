@@ -2,9 +2,14 @@ extends layout
 
 block content 
     h1= pokemoninstance.id
-    img(src=pokemoninstance.pokemon.image)
+    
+    div#pokemoninstance-detail-image-container 
+        if pokemoninstance.pokemon.image != null && pokemoninstance.pokemon.image != ''
+            img(src=pokemoninstance.pokemon.image)
+        else 
+            i.fa-solid.fa-question
 
-    div 
+    div#pokemoninstance-detail-information 
         p Pokemon: 
             a(href=pokemoninstance.pokemon.url)=pokemoninstance.pokemon.name
         p Status: !{pokemoninstance.status}
@@ -12,6 +17,8 @@ block content
             a(href=pokemoninstance.nature.url) !{pokemoninstance.nature.name}
         p Birthday: !{pokemoninstance.birth_date}
         p Date received by Pokedoption: !{pokemoninstance.date_received}
-    a.delete-link(href=pokemoninstance.url + "/delete") Delete Pokemon Instance
-    br
-    a.update-link(href=pokemoninstance.url + "/update") Update Pokemon Instance
+        
+    div.detail-actions
+        a.delete-link(href=pokemoninstance.url + "/delete") Delete Pokemon Instance
+        br
+        a.update-link(href=pokemoninstance.url + "/update") Update Pokemon Instance

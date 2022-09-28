@@ -1,23 +1,26 @@
 extends layout 
 
 block content 
-    h1= nature.name
-    if nature.is_verified 
-        i(class="fa-solid fa-circle-check")
+    div.detail-header 
+        h1= nature.name
+        if nature.is_verified 
+            i(class="fa-solid fa-circle-check")
 
     div 
-        p Increased stat: !{nature.increased_stat}
-        p Decreased stat: !{nature.decreased_stat}
-        p Likes: !{nature.likes_flavor} 
-        p Dislikes: !{nature.hates_flavor}
-    div 
+        p Increased stat: !{(nature.increased_stat ? nature.increased_stat : 'null')}
+        p Decreased stat: !{(nature.decreased_stat ? nature.decreased_stat : 'null')}
+        p Likes: !{(nature.likes_flavor ? nature.likes_flavor : 'null')} 
+        p Dislikes: !{(nature.hates_flavor ? nature.hates_flavor : 'null')}
+    div.detail-list 
         h2 Pokemoninstances with this nature 
         ul
-        each pokemoninstance in pokemoninstance_list 
-            a(href=pokemoninstance.url)= pokemoninstance.id
-            p !{pokemoninstance.pokemon.name} 
-            p !{pokemoninstance.status} 
+            each pokemoninstance in pokemoninstance_list 
+                li
+                    a(href=pokemoninstance.url)= pokemoninstance.id
+                    p !{pokemoninstance.pokemon.name} 
+                    p !{pokemoninstance.status} 
 
-    a.delete-link(href=nature.url + "/delete") Delete Nature
-    br
-    a.update-link(href=nature.url + "/update") Update Nature
+    div.detail-actions
+        a.delete-link(href=nature.url + "/delete") Delete Nature
+        br
+        a.update-link(href=nature.url + "/update") Update Nature

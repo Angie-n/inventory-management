@@ -2,11 +2,22 @@ extends layout
 
 block content 
     h1= title 
-    ul 
-        each item in list 
-            li
-                a(href=item.url)= item.name 
-                if item.image != null
-                    img(src=item.image)
-        else 
-            li No results in our database
+    if 'image' in list[0] 
+        ul#collection-list-boxes
+            each item in list 
+                li
+                    a(href=item.url)= item.name 
+                    div#list-image-container
+                        if item.image != null && item.image != ''
+                            img(src=item.image)
+                        else if 'image' in item     
+                            i.fa-solid.fa-question
+            else 
+                li No results in our database
+    else 
+        ul#collection-list-plain
+            each item in list 
+                li
+                    a(href=item.url)= item.name 
+            else 
+                li No results in our database
