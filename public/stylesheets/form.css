@@ -1,0 +1,23 @@
+button[type='submit'] {
+    width: 100px;
+    height: 20px;
+    font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
+    color: white;
+    background-color: var(--black);
+    border-radius: 5px;
+    border: none;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+button[type='submit']:hover {
+    background-color: rgb(59, 58, 58);
+}
+
+form input[type='checkbox'] {
+    margin-right: 10px;
+}
+
+form input[type='checkbox']+label {
+    text-transform: capitalize;
+}
