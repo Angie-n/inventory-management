@@ -1,0 +1,11 @@
+#delete-container li {
+    margin-top: 20px;
+}
+
+#delete-container ul {
+    margin: 20px 0 20px 0;
+}
+
+#delete-container > p {
+    font-style: italic;
+}

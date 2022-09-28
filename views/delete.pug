@@ -1,21 +1,24 @@
 extends layout
 
 block content 
-    h1 #{title}: !{mainDeletion.id}
     if mainDeletion.name != null 
-        p= mainDeletion.name
+        h1 #{title}: !{mainDeletion.name}
+    else
+        h1 #{title}: !{mainDeletion.id}
     
-    if numDeletions != null && numDeletions > 1
-        h2 The following will also be deleted with this entry: 
-        p *To prevent an entry from being a part of the deletion, update its affected fields
-        ul 
-            each deletions in otherDeletions 
-                h3 !{deletions.name}:
-                each item in deletions.list 
-                    li 
-                        a(href=item.url)= item.id
-                        if item.name != null
-                            p= item.name
+    div#delete-container
+        if numDeletions != null && numDeletions > 1
+            h2 The following will also be deleted with this entry: 
+            p *To prevent an entry from being a part of the deletion, update its affected fields
+                each deletions in otherDeletions 
+                    h3 !{deletions.name}:
+                    ul
+                        each item in deletions.list 
+                            li 
+                                if item.name != null
+                                    a(href=item.url)= item.name
+                                else 
+                                    a(href=item.url)= item.id
 
     p Are you sure you want to delete this entry?
 
