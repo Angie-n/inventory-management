@@ -129,3 +129,25 @@ i.fa-solid.fa-circle-check {
 #pokemoninstance-detail-information p {
     margin-bottom: 10px;
 }
+
+@media only screen and (max-width: 830px) {
+    body {
+      display: block;
+    }
+    nav {
+      display: block;
+      position: absolute;
+      top: 70px;
+      padding: 0;
+      width: 100%;
+      z-index: 1;
+    }
+  
+    #nav-circle-container {
+      display: none;
+    }
+  
+    main {
+      padding: 10px;
+    }
+  }
