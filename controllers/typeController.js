@@ -18,7 +18,7 @@ exports.type_detail = (req, res) => {
             if(err) return err;
             Pokemon.find({types: typeResult})
                 .exec((err, pokemonResult) => {
-                    if(result == null) res.status(404).render('not_found');
+                    if(typeResult == null) res.status(404).render('not_found');
                     if(err) return err;
                     res.render('type_detail', {type: typeResult, pokemon: pokemonResult})
                 })
