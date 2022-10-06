@@ -14,6 +14,7 @@ exports.nature_list = (req, res, next) => {
 exports.nature_detail = (req, res, next) => {
     Nature.findById(req.params.id)
         .exec((err, natureResult) => {
+            if(natureResult == null) res.status(404).render('not_found');
             if(err) return err;
             PokemonInstance.find({nature: natureResult})
             .sort({id: 1})
@@ -92,9 +93,7 @@ exports.nature_delete_post = (req, res, next) => {
   PokemonInstance.find({nature: req.body.id})
       .exec(async function (err, pokemonInstances) {
         if(err) return err;
-        for(let i = 0; i < pokemonInstances.length; i++) {
-          await pokemonInstances[i].remove();
-        }
+        for(let i = 0; i < pokemonInstances.length; i++) await pokemonInstances[i].remove();
         Nature.findById(req.body.id)
         .exec(async function (err, natureResult) {
           if(err) next(err);

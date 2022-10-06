@@ -20,6 +20,7 @@ exports.pokemonInstance_detail = (req, res) => {
         .populate('nature')
         .populate('pokemon')
         .exec((err, result) => {
+            if(result == null) res.status(404).render('not_found');
             if(err) return err;
             res.render('pokemoninstance_detail', {pokemoninstance: result});
         })

@@ -202,6 +202,17 @@ main {
   font-size: 40px;
 }
 
+#not-found-img {
+  display: block;
+  width: min(300px, 100%);
+  margin: auto;
+}
+
+#not-found-text {
+  margin: auto;
+  text-align: center;
+}
+
 @media only screen and (max-width: 830px) {
   body {
     display: block;

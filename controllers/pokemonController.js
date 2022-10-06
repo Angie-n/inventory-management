@@ -42,6 +42,7 @@ exports.pokemon_detail = (req, res, next) => {
     Pokemon.findById(req.params.id)
         .populate('types')
         .exec((err, pokemonResult) => {
+            if(pokemonResult == null) res.status(404).render('not_found');
             if(err) return err;
             PokemonInstance.find({pokemon: pokemonResult})
                 .sort({id: 1})
