@@ -88,16 +88,20 @@ exports.nature_delete_get = (req, res) => {
     });
 }
 
-exports.nature_delete_post = (req, res) => {
-  Promise.all([
-    PokemonInstance.deleteMany({nature: req.body.id}),
-    Nature.findById(req.body.id)
-      .exec((err, natureResult) => {
-        if(err) next(err);
-        natureResult.remove();
-      })
-  ]).then(results => res.redirect("/catalog/nature"))
-  .catch(err => next(err));
+exports.nature_delete_post = (req, res, next) => {
+  PokemonInstance.find({nature: req.body.id})
+      .exec(async function (err, pokemonInstances) {
+        if(err) return err;
+        for(let i = 0; i < pokemonInstances.length; i++) {
+          await pokemonInstances[i].remove();
+        }
+        Nature.findById(req.body.id)
+        .exec(async function (err, natureResult) {
+          if(err) next(err);
+          await natureResult.remove();
+          res.redirect("/catalog/nature");
+        });
+  });
 }
 
 exports.nature_update_get = (req, res, next) => {

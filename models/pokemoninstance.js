@@ -38,7 +38,7 @@ PokemonInstanceSchema.post('save', function(pokemonInstance, next) {
 })
 
 //Decreases number_in_stock every time a pokemoninstance is deleted for that pokemon
-PokemonInstanceSchema.pre(/(deleteMany|remove)/, function (next) {
+PokemonInstanceSchema.pre(/(remove)/, function (next) {
   Pokemon.findById(this.pokemon)
     .exec((err, pokemonResult) => {
       if(err) next(err);
