@@ -10,7 +10,7 @@ block content
         if pokemon.image == null || pokemon.image == ''
             i.fa-solid.fa-question
         else
-            img(src=pokemon.image)
+            img(src=pokemon.image crossorigin="anonymous")
 
     div#pokemon-detail-information
         p Price: $!{pokemon.price}

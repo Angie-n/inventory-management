@@ -10,10 +10,14 @@ const catalogRouter = require('./routes/catalog');
 
 const mongoose = require('mongoose');
 
-const mongoDB = ''; //Need to provide database url
+const dev_db_url = ''; //Need to set database
+const mongoDB = process.env.MONGODB_URI || dev_db_url;
 mongoose.connect(mongoDB, { useNewUrlParser: true , useUnifiedTopology: true });
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+
+const compression = require("compression");
+const helmet = require("helmet");
 
 var app = express();
 
@@ -26,6 +30,21 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(compression());
+app.use(
+  helmet({
+    crossOriginEmbedderPolicy: false,
+    crossOriginResourcePolicy: false,
+    contentSecurityPolicy: {
+      directives: {
+        "default-src": ["'self'", "https://kit.fontawesome.com/", "https://code.jquery.com", "https://ka-f.fontawesome.com/"],
+        "connect-src": ["'self'", "https://kit.fontawesome.com/", "https://code.jquery.com", "https://ka-f.fontawesome.com/"],
+        "script-src": ["'self'", "https://kit.fontawesome.com/", "https://code.jquery.com", "https://ka-f.fontawesome.com/"],
+        "img-src": ["'self'", "https://raw.githubusercontent.com/PokeAPI/"]
+      }},
+  })
+);
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
@@ -44,6 +63,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
+  if(err.status === 404) res.render('not_found');
   res.render('error');
 });
 

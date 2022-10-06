@@ -8,7 +8,7 @@ block content
                 a(href=pokemoninstance.url)= pokemoninstance.id
                 div#list-image-container
                     if pokemoninstance.pokemon.image != null && pokemoninstance.pokemon.image != ''
-                        img(src=pokemoninstance.pokemon.image)
+                        img(src=pokemoninstance.pokemon.image crossorigin="anonymous")
                     else    
                         i.fa-solid.fa-question
                 p !{pokemoninstance.pokemon.name}

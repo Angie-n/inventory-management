@@ -12,7 +12,7 @@ block content
             each poke in pokemon
                 li
                     a(href=poke.url)= poke.name
-                    img(src=poke.image)
+                    img(src=poke.image crossorigin="anonymous")
             else 
                 p No pokemon found.
     

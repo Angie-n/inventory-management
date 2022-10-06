@@ -9,7 +9,7 @@ block content
                     a(href=item.url)= item.name 
                     div#list-image-container
                         if item.image != null && item.image != ''
-                            img(src=item.image)
+                            img(src=item.image crossorigin="anonymous")
                         else if 'image' in item     
                             i.fa-solid.fa-question
             else 
