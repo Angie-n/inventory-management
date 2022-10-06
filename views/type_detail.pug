@@ -13,6 +13,8 @@ block content
                 li
                     a(href=poke.url)= poke.name
                     img(src=poke.image)
+            else 
+                p No pokemon found.
     
     div.detail-actions
         a.delete-link(href=type.url + "/delete") Delete Type

@@ -19,6 +19,8 @@ block content
                     a(href=pokemoninstance.url)= pokemoninstance.id
                     p !{pokemoninstance.pokemon.name} 
                     p !{pokemoninstance.status} 
+            else    
+                p No Pokemoninstances found.
 
     div.detail-actions
         a.delete-link(href=nature.url + "/delete") Delete Nature
