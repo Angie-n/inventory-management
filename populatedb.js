@@ -73,6 +73,7 @@ function pokemonInstanceCreate(pokemon, status, birthDate, dateReceived, nature)
         console.log("New Pokemon Instance: " + product);
     })
     pokemonInstances.push(pokemonInstance);
+    return pokemonInstance;
 }
 
 function priceRandomizer() {
@@ -87,9 +88,8 @@ function priceRandomizer() {
     return Math.round(price);
 }
 
-function createRandomPokemonInstances(pokemon) {
-    let numInstancesToCreate = Math.floor(Math.random() * 3);
-    for(let i = 0; i < numInstancesToCreate; i++) {
+function createRandomPokemonInstanceInfo(pokemon) {
+    return new Promise((resolve, reject) => {
         let statusNum = Math.floor(Math.random() * 4);
         let status;
         switch(statusNum){
@@ -108,7 +108,14 @@ function createRandomPokemonInstances(pokemon) {
         let birthDate = Date.now() - (60 * 60 * 24 * 7 * 1000) - Math.floor(Math.random() * 1000) * 60 * 60 * 24 * 1000;
         let dateReceived = Date.now();
         let natureIndex = Math.floor(Math.random() * natures.length);
-        pokemonInstanceCreate(pokemon, status, birthDate, dateReceived, natures[natureIndex]);
+        resolve(pokemonInstanceCreate(pokemon, status, birthDate, dateReceived, natures[natureIndex]));
+    })
+}
+
+async function createRandomPokemonInstances(pokemon) {
+    let numInstancesToCreate = Math.floor(Math.random() * 3);
+    for(let i = 0; i < numInstancesToCreate; i++) {
+        await createRandomPokemonInstanceInfo(pokemon);
     }
 }
 
